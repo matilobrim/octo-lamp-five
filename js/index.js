@@ -44,6 +44,16 @@ window.addEventListener('DOMContentLoaded', () => {
       o: ['Sydney', 'Canberra', 'Melbourne', 'Perth'],
       a: 1,
     },
+    {
+      q: 'Which country is called the Rising Sun?',
+      o: ['China', 'Japan', 'Thailand', 'Russia'],
+      a: 1,
+    },
+    {
+      q: 'Which country has the most Pyramids',
+      o: ['Sudan', 'Somalia', 'Argentina', 'Egypt'],
+      a: 0,
+    },
   ];
 
   // function to Display the quiz questions and answers from the object
@@ -76,15 +86,64 @@ window.addEventListener('DOMContentLoaded', () => {
 
         if (quizItem.a == i) {
           //change background color of li element here
+          liElement.style.background = "lightblue";
         }
 
         if (radioElement.checked) {
           // code for task 1 goes here
+          if( quizItem.a == i ) {
+            score += 1;
         }
       }
+    }
+    document.querySelector('#score').innerHTML = "Score : " + score ;
     });
   };
 
-  // call the displayQuiz function
+  //  displayQuiz function
   displayQuiz();
+  
+  //  submit button
+  btnSubmit.addEventListener('click',calculateScore);
+  //Reset button
+  btnReset.addEventListener("click", hrefURL) ;
+  function hrefURL()
+  {
+    console.log("reset")
+    displayQuiz();
+    window.location.href = "./index.html";  
+  };
+
+
+//time
+ document.getElementById('time').innerHTML = 01 + ":" + 02;
+  startTimer();
+  function startTimer() {
+    var presentTime = document.getElementById('time').innerHTML;
+    var timeArray = presentTime.split(/[:]+/);
+    var minutes = timeArray[0];
+    var seconds = checkSecond((timeArray[1] - 1));
+    if(seconds==59){
+      minutes=minutes-1
+    }
+    if(minutes<0){
+      btnSubmit.click();
+      return
+    }
+    document.getElementById('time').innerHTML = minutes + ":" + seconds;
+    console.log(minutes);
+    setTimeout(startTimer, 1000); 
+  }
+
+  function checkSecond(sec) {
+    if (sec < 10 && sec >= 0) {
+      sec = "0" + sec
+    }; 
+    if (sec < 0) {
+      sec = "59"
+    };
+    return sec;
+  }
 });
+ 
+
